@@ -1,4 +1,4 @@
-# philosopher
+# philosophers
 ## Dining philosophers problem
 It was originally formulated in 1965 by Edsger Dijkstra as a student exam exercise, presented in terms of computers competing for access to tape drive peripherals.
 ## Difficulties
