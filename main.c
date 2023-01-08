@@ -36,8 +36,9 @@ static int get_random (int max)
 
 
 /* Fonction pour le thread du magasin. */
-static void * fn_store (void * p_data)
+static void * fn_store (void *p_data)
 {
+	(void)p_data;
 		while (1)
 		{
 				if (store.stock <= 0)
