@@ -6,7 +6,7 @@
 /*   By: clesaffr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 19:53:38 by clesaffr          #+#    #+#             */
-/*   Updated: 2023/01/09 20:07:06 by clesaffr         ###   ########.fr       */
+/*   Updated: 2023/01/09 21:20:53 by clesaffr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,18 +86,25 @@ int	parsing_rules(char **av, t_philorules *rules)
 	return (1);
 }
 
-//PHILO EATS
+void	philo_eating(t_philo *philo)
+{
+	t_philorules	*rules;
 
-// mutex fork lock left
-// mutex fork lock right
-// mutex meal-check
-// unlock
-// unlock
-// unlock
+	rules = philo->rules;
+	pthread_mutex_lock(rules->fork[philo->left_fork]);
+	pthread_mutex_lock(rules->fork[philo->left_fork]);
+	pthread_mutex_lock(rules->meal_check);
+	philo->timestamp = timestamp();
+	pthread_mutex_unlock(rules->meal_check);
+	pthread_mutex_unlock(rules->fork[philo->left_fork]);
+	pthread_mutex_unlock(rules->fork[philo->right_fork]);
+	(philo->nb_meals)++;
+}
 
 void	*death_checker(void *void_philo)
 {
-	// IF TIME EAT DIFF TIMESTAMP < TIME_DEATH
+	// 1{ IF TIME EAT DIFF TIMESTAMP < TIME_DEATH
+	// 2{ IF NBR MEALS OF ALL PHILOS IS READY 
 	//PUT IS DIED
 }
 
@@ -111,6 +118,7 @@ int	launch_thread(void *void_philo)
 	while (!rules->death)
 	{
 		//philo_eat
+		philo_eating(philo);
 		//action print thinking
 		//action print sleeping
 	}
