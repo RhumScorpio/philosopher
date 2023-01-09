@@ -6,11 +6,19 @@
 /*   By: clesaffr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 19:53:38 by clesaffr          #+#    #+#             */
-/*   Updated: 2023/01/06 21:44:27 by clesaffr         ###   ########.fr       */
+/*   Updated: 2023/01/09 20:07:06 by clesaffr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
+
+long long	timestamp(void)
+{
+	struct timeval	time;
+
+	gettimeofday(&time, NULL);
+	return ((time.tv_sec * 1000) + (time.tv_usec / 1000));
+}
 
 int			ft_atoi(const char *str)
 {
@@ -44,13 +52,17 @@ int	put_error(char *str)
 void	init_philos(t_philorules *rules)
 {
 	int	i;
+	int	total_philos;
 
 	i = 0;
-	while (i < rules->nbr_philos)
+	total_philos = rules->nbr_philos;
+	while (i < total_philos)
 	{
 		rules->philos[i].id = i;
-		rules->philos[i].ate = 0;
-		rules->philos[i].timestamp_ate = 0;
+		rules->philos[i].nb_meals = 0;
+		rules->philos[i].timestamp = 0;
+		rules->philos[i].left_fork = i;
+		rules->philos[i].right_fork = (i + 1) % total_philos
 		rules->philos[i].rules = rules;
 	}
 }
@@ -66,16 +78,27 @@ int	parsing_rules(char **av, t_philorules *rules)
 			return (-1);
 	if (av[5])
 	{
-		rules->nbr_eats = ft_atoi(av[5]);
-		if (rules->nbr_eats < 0)
+		rules->total_meals = ft_atoi(av[5]);
+		if (rules->total_meals < 0)
 			return (-1);
 	}
 	init_philos(rules);
 	return (1);
 }
 
+//PHILO EATS
+
+// mutex fork lock left
+// mutex fork lock right
+// mutex meal-check
+// unlock
+// unlock
+// unlock
+
 void	*death_checker(void *void_philo)
 {
+	// IF TIME EAT DIFF TIMESTAMP < TIME_DEATH
+	//PUT IS DIED
 }
 
 int	launch_thread(void *void_philo)
@@ -85,8 +108,15 @@ int	launch_thread(void *void_philo)
 
 	philo = (t_philo *)void_philo;
 	rules = philo->rules;
-	get_time_of_day(&philo->timestamp_ate, NULL);
-	pthread_create(&(philo->death_check), NULL, death_checker, void_philo);
+	while (!rules->death)
+	{
+		//philo_eat
+		//action print thinking
+		//action print sleeping
+	}
+	pthread_join(philo->death_check, NULL);
+	if (rules->death)
+		exit(1);
 }
 
 int	launch(t_philorules *rules)
@@ -98,13 +128,13 @@ int	launch(t_philorules *rules)
 	i = 0;
 	while (i < rules->nbr_philos)
 	{
-		philos[i].proc_id = fork();
-		if (philos[i].proc_id < 0)
-			return (-1);
-		if (philos[i].proc_id == 0)
-			launch_thread(&philos[i]);
+		philos[i].timestamp = timestamp();
+		if (pthread_create(&(philos[i].philothread), NULL, launch_thread, (void *)philos[i]))
+			return (1);
 		i++;
 	}
+	//death_checker
+	//exit_launcher
 }
 
 int main(int ac, char **av)

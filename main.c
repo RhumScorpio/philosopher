@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <pthread.h>
 #define INITIAL_STOCK   20
-#define NB_CLIENTS      5
+#define NB_CLIENTS      150
 
 
 /* Structure stockant les informations des threads clients et du magasin. */
@@ -14,12 +14,14 @@ typedef struct
 
 		pthread_t thread_store;
 		pthread_t thread_clients [NB_CLIENTS];
+		pthread_mutex_t	mutex_stock;
 }
 store_t;
 
 static store_t store =
 {
 		.stock = INITIAL_STOCK,
+		.mutex_stock = PTHREAD_MUTEX_INITIALIZER,
 };
 
 
@@ -35,24 +37,26 @@ static int get_random (int max)
 }
 
 
-/* Fonction pour le thread du magasin. */
+/* Fonction pour le thread du magasin. 
 static void * fn_store (void *p_data)
 {
 	(void)p_data;
 		while (1)
 		{
+				pthread_mutex_lock(&store.mutex_stock);
 				if (store.stock <= 0)
 				{
 						store.stock = INITIAL_STOCK;
 						printf ("Remplissage du stock de %d articles !\n", store.stock);
 				}
+				pthread_mutex_unlock(&store.mutex_stock);
 		}
 
 		return NULL;
 }
 
 
-/* Fonction pour les threads des clients. */
+ Fonction pour les threads des clients. */
 static void *fn_clients (void *p_data)
 {
 		char *c;
@@ -61,9 +65,10 @@ static void *fn_clients (void *p_data)
 		c = (char *)p_data;
 		nb = (int *)c;
 
-		while (1)
-		{
+//		while (1)
+//		{
 				int val = get_random(6);
+			pthread_mutex_lock(&store.mutex_stock);
 
 				usleep(get_random(3));
 				usleep(300);
@@ -72,7 +77,9 @@ static void *fn_clients (void *p_data)
 								"Client %d prend %d du stock, reste %d en stock !\n",
 								*nb, val, store.stock
 					   );
-		}
+
+			pthread_mutex_unlock(&store.mutex_stock);
+//		}
 
 		return NULL;
 }
@@ -87,7 +94,7 @@ int main (void)
 
 		/* Creation du thread du magasin. */
 		printf("Creation du thread du magasin !\n");
-		ret = pthread_create(&store.thread_store, NULL,fn_store, NULL);
+//		ret = pthread_create(&store.thread_store, NULL,fn_store, NULL);
 
 		/* Creation des threads des clients si celui du magasin a reussi. */
 		if (!ret)
