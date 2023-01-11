@@ -6,7 +6,7 @@
 /*   By: clesaffr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 17:19:23 by clesaffr          #+#    #+#             */
-/*   Updated: 2023/01/09 20:00:52 by clesaffr         ###   ########.fr       */
+/*   Updated: 2023/01/11 19:07:31 by clesaffr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ typedef struct	s_philo
 	int					left_fork;
 	int					right_fork;
 	long long			timestamp;
-	pid_t				proc_id;
 	pthread_t			philothread;
 	struct s_philorules	*rules;
 }				t_philo;
@@ -41,7 +40,6 @@ typedef struct	s_philorules
 	int				t_sleep;
 	int				total_meals;
 	int				death;
-	t_timestamp		first_timestamp;
 	t_philo			philos[250];
 	pthread_mutex_t	forks[250];
 	pthread_mutex_t	meal_check;

@@ -6,7 +6,7 @@
 #    By: clesaffr <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/08 19:57:32 by clesaffr          #+#    #+#              #
-#    Updated: 2023/01/08 19:58:01 by clesaffr         ###   ########.fr        #
+#    Updated: 2023/01/11 11:58:19 by clesaffr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ CC			=	gcc
 
 CFLAGS		=  -g3 -Wall -Werror -Wextra
 
-SRCS		=	main.c
+SRCS		=	philosophers.c
 				
 PATH_OBJS	=	.objs/
 
