@@ -6,7 +6,7 @@
 /*   By: clesaffr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 20:10:18 by clesaffr          #+#    #+#             */
-/*   Updated: 2023/01/15 01:51:45 by clesaffr         ###   ########.fr       */
+/*   Updated: 2023/01/15 14:38:59 by clesaffr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "philosophers.h"
@@ -23,19 +23,6 @@ int	put_error(char *str)
 {
 	printf("%s\n", str);
 	return (0);
-}
-
-void	print_philo(t_philo *philo, char *str)
-{
-	t_philorules	*rules;
-	long long		time;
-
-	rules = philo->rules;
-	time = timestamp() - rules->start_time;
-	pthread_mutex_lock(&(rules->writing));
-	if (!death_check(rules))
-		printf("timing %lli | %sPHILO %s%d %s%s%s\n", time, KGRN, KRED, philo->id, KCYN, str, KNRM);
-	pthread_mutex_unlock(&(rules->writing));
 }
 
 int	my_sleep(int time, t_philo *philo)

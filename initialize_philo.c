@@ -6,7 +6,7 @@
 /*   By: clesaffr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 20:05:54 by clesaffr          #+#    #+#             */
-/*   Updated: 2023/01/15 02:01:02 by clesaffr         ###   ########.fr       */
+/*   Updated: 2023/01/15 15:05:08 by clesaffr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "philosophers.h"
@@ -30,13 +30,13 @@ void	init_philos(t_philorules *rules)
 	}
 }
 
-static int mutex_error(void)
+static int	mutex_error(void)
 {
 	printf("Bad mutex init.\n");
 	return (-1);
 }
 
-int init_rules(t_philorules *rules)
+int	init_rules(t_philorules *rules)
 {
 	int	i;
 

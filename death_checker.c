@@ -6,7 +6,7 @@
 /*   By: clesaffr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 20:02:55 by clesaffr          #+#    #+#             */
-/*   Updated: 2023/01/15 00:31:38 by clesaffr         ###   ########.fr       */
+/*   Updated: 2023/01/15 15:02:11 by clesaffr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "philosophers.h"
@@ -38,6 +38,6 @@ int	death_check(t_philorules *rules)
 void	put_death(t_philorules *rules)
 {
 	pthread_mutex_lock(&(rules->death_check));
-	rules->death = 1;	
+	rules->death = 1;
 	pthread_mutex_unlock(&(rules->death_check));
 }

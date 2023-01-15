@@ -6,7 +6,7 @@
 /*   By: clesaffr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 17:19:23 by clesaffr          #+#    #+#             */
-/*   Updated: 2023/01/15 02:01:10 by clesaffr         ###   ########.fr       */
+/*   Updated: 2023/01/15 15:40:07 by clesaffr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@
 # define KMAG  "\x1B[35m"
 # define KCYN  "\x1B[36m"
 
-struct s_philorules;
+struct	s_philorules;
 
-typedef struct	s_philo
+typedef struct s_philo
 {
 	int					id;
 	int					nb_meals;
@@ -37,7 +37,7 @@ typedef struct	s_philo
 	struct s_philorules	*rules;
 }				t_philo;
 
-typedef struct	s_philorules
+typedef struct s_philorules
 {
 	int				nbr_philos;
 	int				t_die;
@@ -45,7 +45,6 @@ typedef struct	s_philorules
 	int				t_sleep;
 	int				total_meals;
 	int				death;
-	int				all_ate;
 	long long		start_time;
 	t_philo			philos[250];
 	pthread_mutex_t	forks[250];
@@ -58,7 +57,7 @@ typedef struct	s_philorules
 // INIT
 int			parsing_rules(char **av, t_philorules *rules);
 int			put_error(char *str);
-int 		init_rules(t_philorules *rules);
+int			init_rules(t_philorules *rules);
 void		init_philos(t_philorules *rules);
 
 //LAUNCH

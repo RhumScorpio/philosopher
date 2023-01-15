@@ -6,7 +6,7 @@
 /*   By: clesaffr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 20:08:46 by clesaffr          #+#    #+#             */
-/*   Updated: 2023/01/15 02:01:22 by clesaffr         ###   ########.fr       */
+/*   Updated: 2023/01/15 16:45:00 by clesaffr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "philosophers.h"
@@ -30,26 +30,41 @@ int	pthreadjoin_for_death(t_philorules *rules)
 	return (1);
 }
 
+static int	ate_all(int max, t_philo *philos, int nbr_philos)
+{
+	int	i;
+	int	total;
+
+	i = 0;
+	total = 0;
+	if (!max)
+		return (0);
+	while (i < nbr_philos)
+	{
+		if (philos[i].nb_meals >= max)
+			total++;
+		i++;
+	}
+	if (total == nbr_philos)
+		return (1);
+	else
+		return (0);
+}
+
 void	*monitor(void *void_rules)
 {
 	t_philorules	*rules;
 	t_philo			*philos;
 	int				i;
-	int				total;
-	int				res;
 
 	rules = (t_philorules *)void_rules;
 	philos = rules->philos;
 	while (death_check(rules) != 1)
 	{
-		total = 0;
 		i = 0;
 		while (death_check(rules) != 1 && i < rules->nbr_philos)
 		{
-			if (rules->total_meals && philos[i].nb_meals >= rules->total_meals)
-				total++;
-			res = death_by_starving(&philos[i]);
-			if (res >= rules->t_die)
+			if (death_by_starving(&philos[i]) >= rules->t_die)
 			{
 				print_philo(&philos[i], "is dead.");
 				put_death(rules);
@@ -58,7 +73,7 @@ void	*monitor(void *void_rules)
 		}
 		if (death_check(rules))
 			break ;
-		if (rules->total_meals && total == rules->nbr_philos)
+		if (ate_all(rules->total_meals, philos, rules->nbr_philos))
 			put_death(rules);
 	}
 	return (NULL);

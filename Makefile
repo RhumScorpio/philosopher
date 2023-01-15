@@ -6,7 +6,7 @@
 #    By: clesaffr <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/08 19:57:32 by clesaffr          #+#    #+#              #
-#    Updated: 2023/01/15 01:42:16 by clesaffr         ###   ########.fr        #
+#    Updated: 2023/01/15 14:40:05 by clesaffr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ SRCS		=	philosophers.c\
 				launcher_philo.c\
 				death_checker.c\
 				death_philo.c\
+				print_philo.c\
 				utils_philo.c
 				
 PATH_OBJS	=	.objs/

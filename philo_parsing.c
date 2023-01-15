@@ -6,7 +6,7 @@
 /*   By: clesaffr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 20:04:40 by clesaffr          #+#    #+#             */
-/*   Updated: 2023/01/14 21:52:27 by clesaffr         ###   ########.fr       */
+/*   Updated: 2023/01/15 15:12:00 by clesaffr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "philosophers.h"
@@ -42,9 +42,9 @@ int	parsing_rules(char **av, t_philorules *rules)
 	rules->t_sleep = ft_atoi(av[4]);
 	rules->total_meals = 0;
 	rules->death = 0;
-	if (rules->nbr_philos > 250 || rules->nbr_philos < 0 || rules->t_die < 0 ||
-			rules->t_eat < 0 || rules->t_sleep < 0)
-			return (-1);
+	if (rules->nbr_philos > 250 || rules->nbr_philos < 0 || rules->t_die < 0
+		|| rules->t_eat < 0 || rules->t_sleep < 0)
+		return (-1);
 	if (av[5])
 	{
 		rules->total_meals = ft_atoi(av[5]);
