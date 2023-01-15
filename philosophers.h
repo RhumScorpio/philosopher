@@ -6,7 +6,7 @@
 /*   By: clesaffr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 17:19:23 by clesaffr          #+#    #+#             */
-/*   Updated: 2023/01/11 19:07:31 by clesaffr         ###   ########.fr       */
+/*   Updated: 2023/01/15 02:01:10 by clesaffr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,11 @@
 # include <sys/time.h>
 # include <sys/types.h>
 # include <unistd.h>
+# define KNRM  "\x1B[0m"
+# define KRED  "\x1B[31m"
+# define KGRN  "\x1B[32m"
+# define KMAG  "\x1B[35m"
+# define KCYN  "\x1B[36m"
 
 struct s_philorules;
 
@@ -40,9 +45,37 @@ typedef struct	s_philorules
 	int				t_sleep;
 	int				total_meals;
 	int				death;
+	int				all_ate;
+	long long		start_time;
 	t_philo			philos[250];
 	pthread_mutex_t	forks[250];
+	pthread_mutex_t	writing;
 	pthread_mutex_t	meal_check;
+	pthread_mutex_t	death_check;
+	pthread_t		monitor;
 }				t_philorules;
+
+// INIT
+int			parsing_rules(char **av, t_philorules *rules);
+int			put_error(char *str);
+int 		init_rules(t_philorules *rules);
+void		init_philos(t_philorules *rules);
+
+//LAUNCH
+int			launch(t_philorules *rules);
+void		*launch_thread(void *void_philo);
+void		*monitor(void *void_rules);
+
+//EAT SLEEP THINK
+long long	timestamp(void);
+int			my_sleep(int time, t_philo *philo);
+int			philo_eating(t_philo *philo);
+void		print_philo(t_philo *philo, char *str);
+
+//DIE
+int			death_by_starving(t_philo *philo);
+void		put_death(t_philorules *rules);
+int			death_check(t_philorules *rules);
+int			pthreadjoin_for_death(t_philorules *rules);
 
 #endif
