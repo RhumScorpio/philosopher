@@ -6,7 +6,7 @@
 /*   By: clesaffr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 20:07:01 by clesaffr          #+#    #+#             */
-/*   Updated: 2023/01/15 16:37:34 by clesaffr         ###   ########.fr       */
+/*   Updated: 2023/01/16 23:55:20 by clesaffr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "philosophers.h"
@@ -16,6 +16,13 @@ int	philo_eating(t_philo *philo)
 	t_philorules	*rules;
 
 	rules = philo->rules;
+	if (rules->nbr_philos == 1)
+	{
+		pthread_mutex_lock(&(rules->forks[philo->left_fork]));
+		print_philo(philo, "has taken a fork");
+		pthread_mutex_unlock(&(rules->forks[philo->left_fork]));
+		return (0);
+	}
 	pthread_mutex_lock(&(rules->forks[philo->left_fork]));
 	print_philo(philo, "has taken a fork");
 	pthread_mutex_lock(&(rules->forks[philo->right_fork]));
@@ -47,7 +54,7 @@ void	*launch_thread(void *void_philo)
 		print_philo(philo, "is sleeping");
 		my_sleep(rules->t_sleep, philo);
 		print_philo(philo, "is thinking");
-		usleep(800);
+		usleep(300);
 	}
 	return (NULL);
 }
@@ -62,7 +69,7 @@ int	launch(t_philorules *rules)
 	while (i < rules->nbr_philos)
 	{
 		if (i % 2)
-			usleep(15000);
+			usleep(5000);
 		philos[i].timestamp = timestamp();
 		pthread_create(&(philos[i].philothread), NULL,
 			&launch_thread, &philos[i]);
