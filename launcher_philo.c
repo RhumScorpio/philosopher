@@ -6,7 +6,7 @@
 /*   By: clesaffr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 20:07:01 by clesaffr          #+#    #+#             */
-/*   Updated: 2023/01/18 03:36:52 by clesaffr         ###   ########.fr       */
+/*   Updated: 2023/01/18 21:07:33 by clesaffr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "philosophers.h"
@@ -81,8 +81,10 @@ int	launch(t_philorules *rules)
 	i = 0;
 	while (i < rules->nbr_philos)
 	{
-		if (i % 2)
+		if (i % 3 == 0)
 			usleep(1000);
+		else if (i % 3 == 1)
+			usleep(500);
 		philos[i].timestamp = timestamp();
 		pthread_create(&(philos[i].philothread), NULL,
 			&launch_thread, &philos[i]);

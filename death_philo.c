@@ -6,7 +6,7 @@
 /*   By: clesaffr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 20:08:46 by clesaffr          #+#    #+#             */
-/*   Updated: 2023/01/15 16:45:00 by clesaffr         ###   ########.fr       */
+/*   Updated: 2023/01/18 21:09:40 by clesaffr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "philosophers.h"
@@ -66,7 +66,7 @@ void	*monitor(void *void_rules)
 		{
 			if (death_by_starving(&philos[i]) >= rules->t_die)
 			{
-				print_philo(&philos[i], "is dead.");
+				print_philo(&philos[i], "died");
 				put_death(rules);
 			}
 			i++;
