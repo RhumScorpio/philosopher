@@ -6,7 +6,7 @@
 #    By: clesaffr <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/08 19:57:32 by clesaffr          #+#    #+#              #
-#    Updated: 2023/01/15 14:40:05 by clesaffr         ###   ########.fr        #
+#    Updated: 2023/01/18 03:09:24 by clesaffr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,7 @@ CFLAGS		=  -g3 -Wall -Werror -Wextra
 
 SRCS		=	philosophers.c\
 				philo_parsing.c\
+				fork_exchange.c\
 				initialize_philo.c\
 				launcher_philo.c\
 				death_checker.c\

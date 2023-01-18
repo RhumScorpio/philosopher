@@ -6,7 +6,7 @@
 /*   By: clesaffr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 17:19:23 by clesaffr          #+#    #+#             */
-/*   Updated: 2023/01/15 15:40:07 by clesaffr         ###   ########.fr       */
+/*   Updated: 2023/01/18 03:13:15 by clesaffr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,27 +54,32 @@ typedef struct s_philorules
 	pthread_t		monitor;
 }				t_philorules;
 
-// INIT
-int			parsing_rules(char **av, t_philorules *rules);
-int			put_error(char *str);
-int			init_rules(t_philorules *rules);
-void		init_philos(t_philorules *rules);
-
-//LAUNCH
-int			launch(t_philorules *rules);
-void		*launch_thread(void *void_philo);
-void		*monitor(void *void_rules);
-
-//EAT SLEEP THINK
-long long	timestamp(void);
-int			my_sleep(int time, t_philo *philo);
-int			philo_eating(t_philo *philo);
-void		print_philo(t_philo *philo, char *str);
-
 //DIE
 int			death_by_starving(t_philo *philo);
 void		put_death(t_philorules *rules);
 int			death_check(t_philorules *rules);
 int			pthreadjoin_for_death(t_philorules *rules);
+
+// SLEEP THINK
+long long	timestamp(void);
+int			my_sleep(int time, t_philo *philo);
+
+//EAT
+void		print_philo(t_philo *philo, char *str);
+// fork exchange
+void		take_left_fork(t_philo *philo);
+void		take_right_fork(t_philo *philo);
+int			put_left_fork_back(t_philo *philo);
+int			put_right_fork_back(t_philo *philo);
+
+//LAUNCH
+int			launch(t_philorules *rules);
+void		*monitor(void *void_rules);
+
+// INIT
+int			parsing_rules(char **av, t_philorules *rules);
+int			put_error(char *str);
+int			init_rules(t_philorules *rules);
+void		init_philos(t_philorules *rules);
 
 #endif
