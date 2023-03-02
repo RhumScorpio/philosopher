@@ -35,7 +35,7 @@ int	put_left_fork_back(t_philo *philo)
 
 	rules = philo->rules;
 	pthread_mutex_unlock(&(rules->forks[philo->left_fork]));
-	return (0);
+	return (1);
 }
 
 int	put_right_fork_back(t_philo *philo)
@@ -45,5 +45,5 @@ int	put_right_fork_back(t_philo *philo)
 	rules = philo->rules;
 	pthread_mutex_unlock(&(rules->forks[philo->left_fork]));
 	pthread_mutex_unlock(&(rules->forks[philo->right_fork]));
-	return (0);
+	return (1);
 }
