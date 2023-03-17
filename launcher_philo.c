@@ -36,10 +36,9 @@ static int	philo_eating(t_philo *philo)
 	if (death_check(rules))
 		return (put_left_fork_back(philo));
 	take_right_fork(philo);
-	if (death_check(rules))
-		return (put_right_fork_back(philo));
 	put_meal(philo);
-	return (put_right_fork_back(philo));
+	put_right_fork_back(philo);
+	return (1);
 }
 
 static void	*launch_thread(void *void_philo)
@@ -49,13 +48,16 @@ static void	*launch_thread(void *void_philo)
 
 	philo = (t_philo *)void_philo;
 	rules = philo->rules;
+	pthread_mutex_lock(&(rules->meal_check));
+	pthread_mutex_unlock(&(rules->meal_check));
+	philo->timestamp = timestamp();
 	if (philo->id % 2 == 0)
 	{
 		print_philo(philo, "is thinking");
-		usleep(rules->t_eat);
+		my_sleep(100, philo);
 	}
-	while (!death_check(rules))
-	{
+	while (1)
+	{	
 		if (!philo_eating(philo))
 			break ;
 		if (death_check(rules))
@@ -63,6 +65,7 @@ static void	*launch_thread(void *void_philo)
 		print_philo(philo, "is sleeping");
 		my_sleep(rules->t_sleep, philo);
 		print_philo(philo, "is thinking");
+
 	}
 	return (NULL);
 }
@@ -74,13 +77,16 @@ int	launch(t_philorules *rules)
 
 	philos = rules->philos;
 	i = 0;
+	pthread_mutex_lock(&(rules->meal_check));
 	while (i < rules->nbr_philos)
 	{
-		philos[i].timestamp = timestamp();
+//		philos[i].timestamp = timestamp();
 		pthread_create(&(philos[i].philothread), NULL,
 			&launch_thread, &philos[i]);
 		i++;
 	}
+	rules->start_time = timestamp();
+	pthread_mutex_unlock(&(rules->meal_check));
 	pthread_create(&(rules->monitor), NULL, &monitor, rules);
 	pthreadjoin_for_death(rules);
 	return (1);

@@ -25,18 +25,24 @@ int	death_by_starving(t_philo *philo)
 
 int	death_check(t_philorules *rules)
 {
+	int	i;
+
+	i = 0;
 	pthread_mutex_lock(&(rules->death_check));
-	if (rules->death == 1)
+	i = rules->death;
+	pthread_mutex_unlock(&(rules->death_check));
+	if (i)
 	{
-		pthread_mutex_unlock(&(rules->death_check));
+		printf("SOMEONE IS DEAD\n");
 		return (1);
 	}
-	pthread_mutex_unlock(&(rules->death_check));
-	return (0);
+	else
+		return (0);
 }
 
-void	put_death(t_philorules *rules)
+void	put_death(t_philorules *rules, t_philo *philo)
 {
+	print_philo(philo, "died");
 	pthread_mutex_lock(&(rules->death_check));
 	rules->death = 1;
 	pthread_mutex_unlock(&(rules->death_check));

@@ -59,22 +59,21 @@ void	*monitor(void *void_rules)
 
 	rules = (t_philorules *)void_rules;
 	philos = rules->philos;
-	while (death_check(rules) != 1)
+	while (1)
 	{
 		i = 0;
 		while (death_check(rules) != 1 && i < rules->nbr_philos)
 		{
 			if (death_by_starving(&philos[i]) >= rules->t_die)
 			{
-				print_philo(&philos[i], "died");
-				put_death(rules);
+				put_death(rules, &philos[i]);
 			}
 			i++;
 		}
 		if (death_check(rules))
 			break ;
 		if (ate_all(rules->total_meals, philos, rules->nbr_philos))
-			put_death(rules);
+			put_death(rules, &philos[i]);
 	}
 	return (NULL);
 }

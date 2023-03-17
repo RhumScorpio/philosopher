@@ -20,7 +20,8 @@ void	print_philo(t_philo *philo, char *str)
 	time = timestamp() - rules->start_time;
 	pthread_mutex_lock(&(rules->writing));
 	if (!death_check(rules))
-		printf("%s%lli %s%d %s%s%s\n", KGRN, time, KRED, philo->id,
-			KMAG, str, KNRM);
+		printf("%lli %d %s\n", time, philo->id, str);
+		//printf("%s%lli %s%d %s%s%s\n", KGRN, time, KRED, philo->id,
+		//	KMAG, str, KNRM);
 	pthread_mutex_unlock(&(rules->writing));
 }

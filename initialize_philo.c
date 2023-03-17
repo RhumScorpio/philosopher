@@ -41,7 +41,6 @@ int	init_rules(t_philorules *rules)
 	int	i;
 
 	i = -1;
-	rules->start_time = timestamp();
 	while (++i < rules->nbr_philos)
 	{
 		if (pthread_mutex_init(&rules->forks[i], NULL))

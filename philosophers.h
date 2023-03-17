@@ -56,7 +56,7 @@ typedef struct s_philorules
 
 //DIE
 int			death_by_starving(t_philo *philo);
-void		put_death(t_philorules *rules);
+void		put_death(t_philorules *rules, t_philo *philo);
 int			death_check(t_philorules *rules);
 int			pthreadjoin_for_death(t_philorules *rules);
 
