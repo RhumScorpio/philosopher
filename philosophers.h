@@ -69,8 +69,7 @@ void		print_philo(t_philo *philo, char *str);
 // fork exchange
 void		take_left_fork(t_philo *philo);
 void		take_right_fork(t_philo *philo);
-int			put_left_fork_back(t_philo *philo);
-int			put_right_fork_back(t_philo *philo);
+void		put_fork_back(t_philo *philo);
 
 //LAUNCH
 int			launch(t_philorules *rules);

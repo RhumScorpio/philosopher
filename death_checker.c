@@ -33,7 +33,6 @@ int	death_check(t_philorules *rules)
 	pthread_mutex_unlock(&(rules->death_check));
 	if (i)
 	{
-		printf("SOMEONE IS DEAD\n");
 		return (1);
 	}
 	else
@@ -42,8 +41,12 @@ int	death_check(t_philorules *rules)
 
 void	put_death(t_philorules *rules, t_philo *philo)
 {
-	print_philo(philo, "died");
 	pthread_mutex_lock(&(rules->death_check));
 	rules->death = 1;
 	pthread_mutex_unlock(&(rules->death_check));
+	pthread_mutex_lock(&(rules->writing));
+	printf("%lli ", timestamp() - rules->start_time);
+	printf("%d ", philo->id + 1);
+	printf("%s\n", "died");
+	pthread_mutex_unlock(&(rules->writing));
 }

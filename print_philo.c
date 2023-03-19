@@ -14,14 +14,14 @@
 void	print_philo(t_philo *philo, char *str)
 {
 	t_philorules	*rules;
-	long long		time;
 
 	rules = philo->rules;
-	time = timestamp() - rules->start_time;
 	pthread_mutex_lock(&(rules->writing));
-	if (!death_check(rules))
-		printf("%lli %d %s\n", time, philo->id, str);
-		//printf("%s%lli %s%d %s%s%s\n", KGRN, time, KRED, philo->id,
-		//	KMAG, str, KNRM);
+	if (!rules->death)
+	{
+		printf("%lli ", timestamp() - rules->start_time);
+		printf("%d ", philo->id + 1);
+		printf("%s\n", str);
+	}
 	pthread_mutex_unlock(&(rules->writing));
 }
