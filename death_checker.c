@@ -32,9 +32,7 @@ int	death_check(t_philorules *rules)
 	i = rules->death;
 	pthread_mutex_unlock(&(rules->death_check));
 	if (i)
-	{
 		return (1);
-	}
 	else
 		return (0);
 }
