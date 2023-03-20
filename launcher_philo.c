@@ -46,15 +46,13 @@ static void	*launch_thread(void *void_philo)
 
 	philo = (t_philo *)void_philo;
 	rules = philo->rules;
-	pthread_mutex_lock(&(rules->meal_check));
-	pthread_mutex_unlock(&(rules->meal_check));
 	philo->timestamp = timestamp();
 	if (philo->id % 2 == 0)
 	{
 		print_philo(philo, "is thinking");
 		my_sleep(10, philo);
 	}
-	while (!rules->death)
+	while (1)
 	{	
 		if (!philo_eating(philo))
 			break ;
@@ -74,7 +72,6 @@ int	launch(t_philorules *rules)
 
 	philos = rules->philos;
 	i = 0;
-	pthread_mutex_lock(&(rules->meal_check));
 	rules->start_time = timestamp();
 	while (i < rules->nbr_philos)
 	{
@@ -82,7 +79,6 @@ int	launch(t_philorules *rules)
 			&launch_thread, &philos[i]);
 		i++;
 	}
-	pthread_mutex_unlock(&(rules->meal_check));
 	pthread_create(&(rules->monitor), NULL, &monitor, rules);
 	pthreadjoin_for_death(rules);
 	return (1);

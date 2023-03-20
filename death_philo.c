@@ -59,7 +59,7 @@ void	*monitor(void *void_rules)
 
 	rules = (t_philorules *)void_rules;
 	philos = rules->philos;
-	while (!rules->death)
+	while (1)
 	{
 		i = 0;
 		while (death_check(rules) != 1 && i < rules->nbr_philos)
