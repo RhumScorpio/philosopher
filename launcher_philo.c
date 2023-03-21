@@ -49,7 +49,6 @@ static void	*launch_thread(void *void_philo)
 
 	philo = (t_philo *)void_philo;
 	rules = philo->rules;
-	philo->timestamp = timestamp();
 	if (philo->id % 2 == 0)
 	{
 		print_philo(philo, "is thinking");
@@ -78,6 +77,7 @@ int	launch(t_philorules *rules)
 	rules->start_time = timestamp();
 	while (i < rules->nbr_philos)
 	{
+		philos[i].timestamp = timestamp();
 		pthread_create(&(philos[i].philothread), NULL,
 			&launch_thread, &philos[i]);
 		i++;
