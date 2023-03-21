@@ -66,6 +66,7 @@ void	*monitor(void *void_rules)
 		{
 			if (death_by_starving(&philos[i]) >= rules->t_die)
 				put_death(rules, &philos[i]);
+			usleep(100);
 			i++;
 		}
 		if (death_check(rules))

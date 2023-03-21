@@ -6,7 +6,7 @@
 /*   By: clesaffr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 20:07:01 by clesaffr          #+#    #+#             */
-/*   Updated: 2023/03/19 23:06:01 by clesaffr         ###   ########.fr       */
+/*   Updated: 2023/03/21 12:15:04 by clesaffr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "philosophers.h"
@@ -32,8 +32,11 @@ static int	philo_eating(t_philo *philo)
 	rules = philo->rules;
 	if (rules->nbr_philos == 1)
 		return (0);
-	take_left_fork(philo);
+	if (!(philo->id % 2))
+		take_left_fork(philo);
 	take_right_fork(philo);
+	if (philo->id % 2)
+		take_left_fork(philo);
 	put_meal(philo);
 	put_fork_back(philo);
 	return (1);

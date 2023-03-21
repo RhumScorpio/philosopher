@@ -39,10 +39,10 @@ int	death_check(t_philorules *rules)
 
 void	put_death(t_philorules *rules, t_philo *philo)
 {
+	pthread_mutex_lock(&(rules->writing));
 	pthread_mutex_lock(&(rules->death_check));
 	rules->death = 1;
 	pthread_mutex_unlock(&(rules->death_check));
-	pthread_mutex_lock(&(rules->writing));
 	printf("%lli ", timestamp() - rules->start_time);
 	printf("%d ", philo->id + 1);
 	printf("%s\n", "died");
