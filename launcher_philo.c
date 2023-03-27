@@ -6,7 +6,7 @@
 /*   By: clesaffr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 20:07:01 by clesaffr          #+#    #+#             */
-/*   Updated: 2023/03/21 12:15:04 by clesaffr         ###   ########.fr       */
+/*   Updated: 2023/03/27 20:45:48 by clesaffr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "philosophers.h"
@@ -19,10 +19,9 @@ static void	put_meal(t_philo *philo)
 	print_philo(philo, "is eating");
 	pthread_mutex_lock(&(rules->meal_check));
 	philo->timestamp = timestamp();
-	pthread_mutex_unlock(&(rules->meal_check));
-	my_sleep(rules->t_eat, philo);
 	if (rules->total_meals)
 		(philo->nb_meals)++;
+	pthread_mutex_unlock(&(rules->meal_check));
 }
 
 static int	philo_eating(t_philo *philo)
@@ -32,13 +31,18 @@ static int	philo_eating(t_philo *philo)
 	rules = philo->rules;
 	if (rules->nbr_philos == 1)
 		return (0);
-	if (!(philo->id % 2))
-		take_left_fork(philo);
-	take_right_fork(philo);
 	if (philo->id % 2)
 		take_left_fork(philo);
+	take_right_fork(philo);
+	if (!(philo->id % 2))
+		take_left_fork(philo);
 	put_meal(philo);
-	put_fork_back(philo);
+	my_sleep(rules->t_eat, philo);
+	if (philo->id % 2)
+		pthread_mutex_unlock(&(rules->forks[philo->left_fork]));
+	pthread_mutex_unlock(&(rules->forks[philo->right_fork]));
+	if (!(philo->id % 2))
+		pthread_mutex_unlock(&(rules->forks[philo->left_fork]));
 	return (1);
 }
 
@@ -49,13 +53,13 @@ static void	*launch_thread(void *void_philo)
 
 	philo = (t_philo *)void_philo;
 	rules = philo->rules;
-	if (philo->id % 2 == 0)
-	{
-		print_philo(philo, "is thinking");
-		my_sleep(10, philo);
-	}
 	while (1)
 	{	
+		if (!(philo->id % 2) && (rules->nbr_philos % 2))
+		{
+			print_philo(philo, "is thinking");
+			my_sleep(10, philo);
+		}
 		if (!philo_eating(philo))
 			break ;
 		if (death_check(rules))

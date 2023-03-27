@@ -6,7 +6,7 @@
 /*   By: clesaffr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 20:08:46 by clesaffr          #+#    #+#             */
-/*   Updated: 2023/01/18 21:09:40 by clesaffr         ###   ########.fr       */
+/*   Updated: 2023/03/27 18:59:27 by clesaffr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "philosophers.h"
@@ -32,17 +32,21 @@ int	pthreadjoin_for_death(t_philorules *rules)
 
 static int	ate_all(int max, t_philo *philos, int nbr_philos)
 {
-	int	i;
-	int	total;
+	t_philorules	*rules;
+	int				i;
+	int				total;
 
 	i = 0;
 	total = 0;
+	rules = philos->rules;
 	if (!max)
 		return (0);
 	while (i < nbr_philos)
 	{
+		pthread_mutex_lock(&(rules->meal_check));
 		if (philos[i].nb_meals >= max)
 			total++;
+		pthread_mutex_unlock(&(rules->meal_check));
 		i++;
 	}
 	if (total == nbr_philos)
@@ -72,7 +76,10 @@ void	*monitor(void *void_rules)
 		if (death_check(rules))
 			break ;
 		if (ate_all(rules->total_meals, philos, rules->nbr_philos))
-			put_death(rules, &philos[i]);
+		{
+			stop_for_ate_all(rules);
+			break ;
+		}
 	}
 	return (NULL);
 }

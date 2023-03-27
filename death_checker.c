@@ -48,3 +48,10 @@ void	put_death(t_philorules *rules, t_philo *philo)
 	printf("%s\n", "died");
 	pthread_mutex_unlock(&(rules->writing));
 }
+
+void	stop_for_ate_all(t_philorules *rules)
+{
+	pthread_mutex_lock(&(rules->death_check));
+	rules->death = 1;
+	pthread_mutex_unlock(&(rules->death_check));
+}

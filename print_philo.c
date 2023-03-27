@@ -17,7 +17,7 @@ void	print_philo(t_philo *philo, char *str)
 
 	rules = philo->rules;
 	pthread_mutex_lock(&(rules->writing));
-	if (!rules->death)
+	if (!death_check(rules))
 	{
 		printf("%lli ", timestamp() - rules->start_time);
 		printf("%d ", philo->id + 1);

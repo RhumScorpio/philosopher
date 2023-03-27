@@ -28,12 +28,3 @@ void	take_right_fork(t_philo *philo)
 	pthread_mutex_lock(&(rules->forks[philo->right_fork]));
 	print_philo(philo, "has taken a fork");
 }
-
-void	put_fork_back(t_philo *philo)
-{
-	t_philorules	*rules;
-
-	rules = philo->rules;
-	pthread_mutex_unlock(&(rules->forks[philo->left_fork]));
-	pthread_mutex_unlock(&(rules->forks[philo->right_fork]));
-}
