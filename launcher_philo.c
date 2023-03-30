@@ -32,7 +32,10 @@ static int	philo_eating(t_philo *philo)
 	if (rules->nbr_philos == 1)
 		return (0);
 	if (philo->id % 2)
+	{
+		usleep(1000);
 		take_left_fork(philo);
+	}
 	take_right_fork(philo);
 	if (!(philo->id % 2))
 		take_left_fork(philo);
@@ -53,13 +56,13 @@ static void	*launch_thread(void *void_philo)
 
 	philo = (t_philo *)void_philo;
 	rules = philo->rules;
+	if (!(philo->id % 2) && (rules->nbr_philos % 2))
+	{
+		print_philo(philo, "is thinking");
+		my_sleep(rules->t_eat, philo);
+	}
 	while (1)
 	{	
-		if (!(philo->id % 2) && (rules->nbr_philos % 2))
-		{
-			print_philo(philo, "is thinking");
-			my_sleep(10, philo);
-		}
 		if (!philo_eating(philo))
 			break ;
 		if (death_check(rules))

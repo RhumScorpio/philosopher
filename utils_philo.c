@@ -27,16 +27,22 @@ int	put_error(char *str)
 
 int	my_sleep(int time, t_philo *philo)
 {
+	int				i;
 	t_philorules	*rules;
 	long long		timestamp_aim;
 
+	i = 0;
 	rules = philo->rules;
 	timestamp_aim = timestamp() + time;
 	while (timestamp() <= timestamp_aim)
 	{
-		usleep(50);
-		if (death_check(rules))
-			return (1);
+		usleep(1000);
+		i++;
+		if (i >= 120)
+		{
+			if (death_check(rules))
+				return (1);
+		}
 	}
 	return (0);
 }

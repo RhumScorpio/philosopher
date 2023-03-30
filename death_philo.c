@@ -39,7 +39,7 @@ static int	ate_all(int max, t_philo *philos, int nbr_philos)
 	i = 0;
 	total = 0;
 	rules = philos->rules;
-	if (!max)
+	if (max == -1)
 		return (0);
 	while (i < nbr_philos)
 	{
@@ -70,7 +70,7 @@ void	*monitor(void *void_rules)
 		{
 			if (death_by_starving(&philos[i]) >= rules->t_die)
 				put_death(rules, &philos[i]);
-			usleep(100);
+			usleep(1000);
 			i++;
 		}
 		if (death_check(rules))

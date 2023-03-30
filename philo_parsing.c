@@ -40,7 +40,7 @@ int	parsing_rules(char **av, t_philorules *rules)
 	rules->t_die = ft_atoi(av[2]);
 	rules->t_eat = ft_atoi(av[3]);
 	rules->t_sleep = ft_atoi(av[4]);
-	rules->total_meals = 0;
+	rules->total_meals = -1;
 	rules->death = 0;
 	if (rules->nbr_philos > 200 || rules->nbr_philos < 1 || rules->t_die < 0
 		|| rules->t_eat < 0 || rules->t_sleep < 0)
@@ -48,7 +48,7 @@ int	parsing_rules(char **av, t_philorules *rules)
 	if (av[5])
 	{
 		rules->total_meals = ft_atoi(av[5]);
-		if (rules->total_meals < 0)
+		if (rules->total_meals <= 0)
 			return (-1);
 	}
 	init_philos(rules);
