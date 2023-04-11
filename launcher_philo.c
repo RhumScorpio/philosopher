@@ -6,10 +6,21 @@
 /*   By: clesaffr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/14 20:07:01 by clesaffr          #+#    #+#             */
-/*   Updated: 2023/03/27 20:45:48 by clesaffr         ###   ########.fr       */
+/*   Updated: 2023/04/11 18:45:52 by clesaffr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "philosophers.h"
+
+static void	add_meal(t_philo *philo)
+{
+	t_philorules	*rules;
+
+	rules = philo->rules;
+	pthread_mutex_lock(&(rules->meal_check));
+	if (rules->total_meals)
+		(philo->nb_meals)++;
+	pthread_mutex_unlock(&(rules->meal_check));
+}
 
 static void	put_meal(t_philo *philo)
 {
@@ -19,8 +30,6 @@ static void	put_meal(t_philo *philo)
 	print_philo(philo, "is eating");
 	pthread_mutex_lock(&(rules->meal_check));
 	philo->timestamp = timestamp();
-	if (rules->total_meals)
-		(philo->nb_meals)++;
 	pthread_mutex_unlock(&(rules->meal_check));
 }
 
@@ -32,13 +41,13 @@ static int	philo_eating(t_philo *philo)
 	if (rules->nbr_philos == 1)
 		return (0);
 	if (philo->id % 2)
+		take_left_fork(philo);
+	take_right_fork(philo);
+	if (!(philo->id % 2))
 	{
 		usleep(1000);
 		take_left_fork(philo);
 	}
-	take_right_fork(philo);
-	if (!(philo->id % 2))
-		take_left_fork(philo);
 	put_meal(philo);
 	my_sleep(rules->t_eat, philo);
 	if (philo->id % 2)
@@ -46,6 +55,7 @@ static int	philo_eating(t_philo *philo)
 	pthread_mutex_unlock(&(rules->forks[philo->right_fork]));
 	if (!(philo->id % 2))
 		pthread_mutex_unlock(&(rules->forks[philo->left_fork]));
+	add_meal(philo);
 	return (1);
 }
 
@@ -56,7 +66,7 @@ static void	*launch_thread(void *void_philo)
 
 	philo = (t_philo *)void_philo;
 	rules = philo->rules;
-	if (!(philo->id % 2) && (rules->nbr_philos % 2))
+	if (!(philo->id % 2))
 	{
 		print_philo(philo, "is thinking");
 		my_sleep(rules->t_eat, philo);
@@ -70,6 +80,8 @@ static void	*launch_thread(void *void_philo)
 		print_philo(philo, "is sleeping");
 		my_sleep(rules->t_sleep, philo);
 		print_philo(philo, "is thinking");
+		if (rules->t_eat > rules->t_sleep)
+			my_sleep(rules->t_eat - rules->t_sleep, philo);
 	}
 	return (NULL);
 }
