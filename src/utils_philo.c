@@ -9,7 +9,7 @@
 /*   Updated: 2023/01/18 03:15:02 by clesaffr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "philosophers.h"
+#include "../philosophers.h"
 
 long long	timestamp(void)
 {

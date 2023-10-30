@@ -9,7 +9,7 @@
 /*   Updated: 2023/02/27 21:31:38 by clesaffr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "philosophers.h"
+#include "../philosophers.h"
 
 void	print_philo(t_philo *philo, char *str)
 {

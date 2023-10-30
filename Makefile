@@ -6,7 +6,7 @@
 #    By: clesaffr <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/08 19:57:32 by clesaffr          #+#    #+#              #
-#    Updated: 2023/01/18 03:09:24 by clesaffr         ###   ########.fr        #
+#    Updated: 2023/10/30 20:42:29 by clesaffr         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,8 @@ SRCS		=	philosophers.c\
 				
 PATH_OBJS	=	.objs/
 
+PATH_SRCS	=	src/
+
 F_OBJS		=	$(addprefix $(PATH_OBJS), $(OBJS))
 
 OBJS		=	$(SRCS:.c=.o)
@@ -37,16 +39,18 @@ UNAME		:= $(shell uname)
 all				: $(PATH_OBJS) $(NAME)
 
 $(PATH_OBJS)	:	
-					mkdir -p $(PATH_OBJS)
+					@mkdir -p $(PATH_OBJS)
 
 $(NAME)			:	$(F_OBJS)
-					$(CC) $(CFLAGS) $(F_OBJS) -lpthread -o $(NAME)
+					@$(CC) $(CFLAGS) $(F_OBJS) -lpthread -o $(NAME)
+					@echo "-------PHILOSOPHERS-------\n"
+					@echo "[USAGE] ./philo nbr_of_philos time_to_die time_to_eat time_to_sleep\n"
 
-$(PATH_OBJS)%.o	:	%.c
-						$(CC) $(INCLUDES) $(CFLAGS) -c $< -o $@
+$(PATH_OBJS)%.o	:	$(PATH_SRCS)%.c
+						@$(CC) $(INCLUDES) $(CFLAGS) -c $< -o $@
 
 clean			:
-					rm -rf $(F_OBJS) $(PATH_OBJS)
+					@rm -rf $(F_OBJS) $(PATH_OBJS)
 
 fclean			:	clean
 					rm -f $(NAME)

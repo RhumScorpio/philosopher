@@ -9,7 +9,7 @@
 /*   Updated: 2023/04/11 18:45:52 by clesaffr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "philosophers.h"
+#include "../philosophers.h"
 
 static void	add_meal(t_philo *philo)
 {

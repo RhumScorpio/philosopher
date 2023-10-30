@@ -10,11 +10,27 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philosophers.h"
+#include "../philosophers.h"
+
+int	ft_strlen(char *str)
+{
+	int i;
+
+	while (str++)
+		i++;
+	return (i);
+}
 
 int	main(int ac, char **av)
 {
 	t_philorules	rules;
+
+	/*
+		This program is meant to calculate if a philosopher dies.
+		time_to_eat is the meal duration.
+		They exchange forks when finished eating.
+		If one of them did not eat when time_to_die is up, the program ends.
+	*/
 
 	if (ac != 5 && ac != 6)
 		return (put_error("Wrong number of arguments."));

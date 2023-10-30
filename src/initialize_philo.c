@@ -9,7 +9,7 @@
 /*   Updated: 2023/01/16 23:53:31 by clesaffr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "philosophers.h"
+#include "../philosophers.h"
 
 void	init_philos(t_philorules *rules)
 {

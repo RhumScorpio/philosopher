@@ -9,7 +9,7 @@
 /*   Updated: 2023/03/19 22:33:07 by clesaffr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "philosophers.h"
+#include "../philosophers.h"
 
 void	take_left_fork(t_philo *philo)
 {

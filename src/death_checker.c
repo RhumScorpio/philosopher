@@ -9,7 +9,7 @@
 /*   Updated: 2023/01/15 15:02:11 by clesaffr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "philosophers.h"
+#include "../philosophers.h"
 
 int	death_by_starving(t_philo *philo)
 {

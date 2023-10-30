@@ -9,7 +9,7 @@
 /*   Updated: 2023/03/27 18:59:27 by clesaffr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "philosophers.h"
+#include "../philosophers.h"
 
 int	pthreadjoin_for_death(t_philorules *rules)
 {

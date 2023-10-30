@@ -9,7 +9,7 @@
 /*   Updated: 2023/03/24 12:25:40 by clesaffr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "philosophers.h"
+#include "../philosophers.h"
 
 static int	ft_atoi(const char *str)
 {
