@@ -6,20 +6,11 @@
 /*   By: clesaffr <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 19:53:38 by clesaffr          #+#    #+#             */
-/*   Updated: 2023/01/15 15:13:53 by clesaffr         ###   ########.fr       */
+/*   Updated: 2023/10/30 20:57:00 by clesaffr         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../philosophers.h"
-
-int	ft_strlen(char *str)
-{
-	int i;
-
-	while (str++)
-		i++;
-	return (i);
-}
 
 int	main(int ac, char **av)
 {
